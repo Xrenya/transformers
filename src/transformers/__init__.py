@@ -122,6 +122,7 @@ _import_structure = {
     ],
     "models": [],
     # Models
+    "models.sam": ["SAM_PRETRAINED_CONFIG_ARCHIVE_MAP", "SamConfig"],
     "models.albert": ["ALBERT_PRETRAINED_CONFIG_ARCHIVE_MAP", "AlbertConfig"],
     "models.align": [
         "ALIGN_PRETRAINED_CONFIG_ARCHIVE_MAP",
@@ -935,6 +936,14 @@ else:
     _import_structure["modeling_utils"] = ["PreTrainedModel"]
 
     # PyTorch models structure
+
+    _import_structure["models.sam"].extend(
+        [
+            "SAM_PRETRAINED_MODEL_ARCHIVE_LIST",
+            "SamModel",
+            "SamPreTrainedModel",
+        ]
+    )
     _import_structure["models.albert"].extend(
         [
             "ALBERT_PRETRAINED_MODEL_ARCHIVE_LIST",
@@ -3754,6 +3763,7 @@ if TYPE_CHECKING:
         load_tf2_weights_in_pytorch_model,
     )
     from .models.albert import ALBERT_PRETRAINED_CONFIG_ARCHIVE_MAP, AlbertConfig
+    from .models.sam import SAM_PRETRAINED_CONFIG_ARCHIVE_MAP, SamConfig
     from .models.align import (
         ALIGN_PRETRAINED_CONFIG_ARCHIVE_MAP,
         AlignConfig,
@@ -4485,6 +4495,12 @@ if TYPE_CHECKING:
         from .modeling_utils import PreTrainedModel
 
         # PyTorch model imports
+
+        from .models.sam import (
+            SAM_PRETRAINED_MODEL_ARCHIVE_LIST,
+            SamModel,
+            SamPreTrainedModel,
+        )
         from .models.albert import (
             ALBERT_PRETRAINED_MODEL_ARCHIVE_LIST,
             AlbertForMaskedLM,

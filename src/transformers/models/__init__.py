@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from . import (
+    sam,
     albert,
     align,
     altclip,
