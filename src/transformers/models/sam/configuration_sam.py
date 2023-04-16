@@ -14,9 +14,9 @@
 # limitations under the License.
 """ Sam model configuration """
 
+from typing import List
 from ...configuration_utils import PretrainedConfig
 from ...utils import logging
-
 
 logger = logging.get_logger(__name__)
 
@@ -98,7 +98,7 @@ class SamConfig(PretrainedConfig):
 """
     model_type = "sam"
     keys_to_ignore_at_inference = ["past_key_values"]
-    
+
     def __init__(
         self,
         image_size: int = 1024,
@@ -171,9 +171,8 @@ class SamConfig(PretrainedConfig):
             **kwargs
         )
 
-    # attribute_map = {
-    #     "num_attention_heads": "encoder_attention_heads",
-    #     "hidden_size": "d_model"
-    # }
+    attribute_map = {
+        "num_attention_heads": "encoder_attention_heads",
+        # "hidden_size": "d_model"
+    }
 
-    

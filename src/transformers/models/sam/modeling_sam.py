@@ -44,6 +44,7 @@ logger = logging.get_logger(__name__)
 _CHECKPOINT_FOR_DOC = "Xrenya/segment-anything-vit-b"
 _CONFIG_FOR_DOC = "SamConfig"
 
+_EXPECTED_OUTPUT_SHAPE = (1, 3, 1024, 1024)
 
 SAM_PRETRAINED_MODEL_ARCHIVE_LIST = [
     "Xrenya/segment-anything-vit-b",
@@ -171,7 +172,7 @@ class Attention(nn.Module):
     """Multi-head Attention block with relative position embeddings."""
     def __init__(
         self,
-        config: SAMConfig,
+        config: SamConfig,
         hidden_size: int,
         num_attention_heads: int = 8,
         input_size: Optional[Tuple[int, int]] = None,
@@ -327,7 +328,7 @@ def window_unpartition(windows: torch.Tensor, window_size: int, pad_hw: Tuple[in
 class Block(nn.Module):
     """Transformer blocks with support of window attention and residual propagation blocks"""
 
-    def __init__(self, config: SAMConfig, norm_layer: nn.Module = nn.LayerNorm, window_size: int = 0, input_size: Optional[Tuple[int, int]] = None,) -> None:
+    def __init__(self, config: SamConfig, norm_layer: nn.Module = nn.LayerNorm, window_size: int = 0, input_size: Optional[Tuple[int, int]] = None,) -> None:
         """
         Args:
             dim (int): Number of input channels.
@@ -383,7 +384,7 @@ class Block(nn.Module):
 
 
 class ImageEncoderViT(nn.Module):
-    def __init__(self, config: SAMConfig, window_size: int) -> None:
+    def __init__(self, config: SamConfig) -> None:
         """
         Args:
             img_size (int): Input image size.
@@ -510,7 +511,7 @@ class PositionEmbeddingRandom(nn.Module):
 
 
 class PromtEncoder(nn.Module):
-    def __init__(self, config: SAMConfig) -> None:
+    def __init__(self, config: SamConfig) -> None:
         """
         Encodes prompts for input to SAM's mask decoder.
 
@@ -668,7 +669,7 @@ class MLP(nn.Module):
 
 
 class MaskDecoder(nn.Module):
-    def __init__(self, config: SAMConfig, transformer: nn.Module) -> None:
+    def __init__(self, config: SamConfig, transformer: nn.Module) -> None:
         """
         Predicts masks given an image and prompt embeddings, using a
         tranformer architecture.
@@ -925,8 +926,8 @@ SAM_STANDALONE_INPUTS_DOCSTRING = r"""
     "The bare Sam Model outputting raw hidden-states without any specific head on top.",
     SAM_START_DOCSTRING,
 )
-class SAMModel(SAMPreTrainedModel):
-    def __init__(self, config: SAMConfig):
+class SamModel(SamPreTrainedModel):
+    def __init__(self, config: SamConfig):
         super().__init__(config)
         self.config = config
 
